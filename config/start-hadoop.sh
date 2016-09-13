@@ -10,3 +10,6 @@ $HADOOP_HOME/sbin/start-yarn.sh
 
 echo -e "\n"
 
+$SPARK_HOME/sbin/start-all.sh
+
+echo -e "\n"
