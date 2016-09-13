@@ -3,7 +3,7 @@
 - Blog: [Run Hadoop Cluster in Docker Update](http://kiwenlau.com/2016/06/26/hadoop-cluster-docker-update-english/)
 
 
-![alt tag](https://raw.githubusercontent.com/kiwenlau/hadoop-cluster-docker/master/hadoop-cluster-docker.png)
+![alt tag](https://raw.githubusercontent.com/oelesin/hadoop-cluster-docker/master/hadoop-cluster-docker.png)
 
 
 ###3 Nodes Hadoop Cluster
