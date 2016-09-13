@@ -12,11 +12,20 @@ RUN wget https://github.com/kiwenlau/compile-hadoop/releases/download/2.7.2/hado
     tar -xzvf hadoop-2.7.2.tar.gz && \
     mv hadoop-2.7.2 /usr/local/hadoop && \
     rm hadoop-2.7.2.tar.gz
+    
+# install spark 2.0
+RUN wget http://www-eu.apache.org/dist/spark/spark-2.0.0/spark-2.0.0-bin-hadoop2.7.tgz && \
+    tar -xzvf spark-2.0.0-bin-hadoop2.7.tgz && \
+    mv spark-2.0.0-bin-hadoop2.7 /usr/local/spark && \
+    rm spark-2.0.0-bin-hadoop2.7.tgz
 
 # set environment variable
 ENV JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 
 ENV HADOOP_HOME=/usr/local/hadoop 
-ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin 
+ENV HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+ENV SPARK_HOME=/usr/local/spark
+ENV SPARK_WORKER_CORES=6
+ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin:/usr/local/spark/sbin
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
@@ -35,13 +44,15 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml && \
     mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
     mv /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
+    mv /tmp/slaves $SPARK_HOME/sbin/slaves && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh
 
 RUN chmod +x ~/start-hadoop.sh && \
     chmod +x ~/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
-    chmod +x $HADOOP_HOME/sbin/start-yarn.sh 
+    chmod +x $HADOOP_HOME/sbin/start-yarn.sh && \
+    chmod +x $SPARK_HOME/sbin/start-all.sh
 
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format
