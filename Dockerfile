@@ -43,6 +43,7 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
     cp /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
     cp /tmp/slaves $SPARK_HOME/conf/slaves && \
+    mv /tmp/spark-env.sh $SPARK_HOME/conf/spark-env.sh && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh
 
