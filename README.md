@@ -1,5 +1,7 @@
 ##Run Hadoop Cluster within Docker Containers
 
+[![](https://images.microbadger.com/badges/version/oelesin/hadoop-spark-cluster.svg)](https://github.com/OElesin/hadoop-cluster-docker/ "Get your own version badge on microbadger.com")
+
 - Blog: [Run Hadoop Cluster in Docker Update](http://kiwenlau.com/2016/06/26/hadoop-cluster-docker-update-english/)
 
 
