@@ -13,7 +13,7 @@
 #####1. pull docker image
 
 ```
-sudo docker pull kiwenlau/hadoop:1.0
+sudo docker pull oelesin/hadoop-spark-cluster:latest
 ```
 
 #####2. clone github repository
