@@ -5,31 +5,31 @@ N=${1:-3}
 
 
 # start hadoop master container
-sudo docker rm -f hadoop-master &> /dev/null
+docker rm -f hadoop-master &> /dev/null
 echo "start hadoop-master container..."
-sudo docker run -itd \
+docker run -itd \
                 --net=hadoop \
                 -p 50070:50070 \
                 -p 8088:8088 \
                 -p 8085:8085 \
                 --name hadoop-master \
                 --hostname hadoop-master \
-                oelesin/hadoop-spark-cluster:latest &> /dev/null
+                activitystream/hadoop-spark-cluster
 
 
 # start hadoop slave container
 i=1
 while [ $i -lt $N ]
 do
-	sudo docker rm -f hadoop-slave$i &> /dev/null
+	docker rm -f hadoop-slave$i
 	echo "start hadoop-slave$i container..."
-	sudo docker run -itd \
+	docker run -itd \
 	                --net=hadoop \
 	                --name hadoop-slave$i \
 	                --hostname hadoop-slave$i \
-	                oelesin/hadoop-spark-cluster:latest &> /dev/null
+	                activitystream/hadoop-spark-cluster
 	i=$(( $i + 1 ))
-done 
+done
 
 # get into hadoop master container
-sudo docker exec -it hadoop-master bash
+docker exec -it hadoop-master bash
