@@ -25,13 +25,13 @@ cd hadoop-cluster-docker
 #####3. create hadoop network
 
 ```
-sudo docker network create --driver=bridge hadoop
+docker network create --driver=bridge hadoop
 ```
 
 #####4. start container
 
 ```
-sudo ./start-container.sh
+./start-container.sh
 ```
 
 **output:**
@@ -81,7 +81,7 @@ do 1~3 like section A
 #####2. rebuild docker image
 
 ```
-sudo ./resize-cluster.sh 5
+./resize-cluster.sh 5
 ```
 - specify parameter > 1: 2, 3..
 - this script just rebuild hadoop image with different **slaves** file, which pecifies the name of all slave nodes
