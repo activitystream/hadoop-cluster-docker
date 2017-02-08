@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+
+  hadoop-master:
+    image: activitystream/hadoop-spark-cluster
+    ports:
+      - 50070:50070
+      - 50010:50010
+      - 50020:50020
+      - 50075:50075
+      - 50090:50090
+      - 8020:8020
+      - 8088:8088
+      - 8085:8085
+      - 9000:9000
+    networks:
+      - hadoop
+    hostname: hadoop-master
+    depends_on: 
+      - hadoop-slave1
+      - hadoop-slave2
+    deploy:
+      placement:
+        constraints: [node.hostname == swarm1]
+    command: ./run.sh
+
+  hadoop-slave1:
+    image: activitystream/hadoop-spark-cluster
+    networks:
+      - hadoop
+    hostname: hadoop-slave1
+    deploy:
+      placement:
+        constraints: [node.hostname == swarm2]
+  hadoop-slave2:
+    image: activitystream/hadoop-spark-cluster
+    networks:
+      - hadoop
+    hostname: hadoop-slave2
+    deploy:
+      placement:
+        constraints: [node.hostname == swarm3]
+
+networks:
+  hadoop:
+    driver: overlay
+
+volumes:
+  db-data:

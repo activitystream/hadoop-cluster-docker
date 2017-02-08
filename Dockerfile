@@ -47,9 +47,11 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     cp /tmp/slaves $SPARK_HOME/conf/slaves && \
     mv /tmp/spark-env.sh $SPARK_HOME/conf/spark-env.sh && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
+    mv /tmp/run.sh ~/run.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh
 
 RUN chmod +x ~/start-hadoop.sh && \
+    chmod +x ~/run.sh && \
     chmod +x ~/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh
@@ -57,4 +59,7 @@ RUN chmod +x ~/start-hadoop.sh && \
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format
 
-CMD [ "sh", "-c", "service ssh start; bash"]
+EXPOSE 22 50070 50010 50020 50075 50090 8020 8088 8085 9000
+
+
+CMD [ "sh", "-c", "service ssh start; tail -f /usr/local/*/logs/*.out ; bash -c 'while true; do sleep 10; done'"]
