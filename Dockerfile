@@ -59,7 +59,7 @@ RUN chmod +x ~/start-hadoop.sh && \
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format
 
-EXPOSE 22 50070 50010 50020 50075 50090 8020 8088 8085 9000
+EXPOSE 22 50070 50010 50020 50075 50090 8020 8088 8085 9000 8080
 
 
-CMD [ "sh", "-c", "service ssh start; tail -f /usr/local/*/logs/*.out ; bash -c 'while true; do sleep 10; done'"]
+CMD [ "sh", "-c", "service ssh start; bash -c 'while true; do tail -f /usr/local/*/logs/*.out; sleep 10; done'"]
