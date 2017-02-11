@@ -2,6 +2,14 @@ version: "3"
 
 services:
 
+  spark-ui-proxy:
+    image: registry.activitystream.com:5043/spark-ui-proxy
+    networks:
+      - hadoop
+    ports: 
+     - 9999:9999
+    command: hadoop-master:8080 9999 
+
   hadoop-master:
     image: registry.activitystream.com:5043/hadoop-spark-cluster
     ports:
@@ -14,6 +22,7 @@ services:
       - 8088:8088
       - 8080:8080
       - 8085:8085
+      - 6066:6066
       - 9000:9000
     networks:
       - hadoop
@@ -56,7 +65,7 @@ services:
 
 networks:
   hadoop:
-    driver: overlay
+    external: true
 
 volumes:
   db-data:
