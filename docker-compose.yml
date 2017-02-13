@@ -66,6 +66,3 @@ services:
 networks:
   hadoop:
     external: true
-
-volumes:
-  db-data:
