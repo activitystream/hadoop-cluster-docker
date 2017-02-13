@@ -11,7 +11,7 @@ services:
     command: hadoop-master:8080 9999 
 
   hadoop-master:
-    image: registry.activitystream.com:5043/hadoop-spark-cluster
+    image: registry.activitystream.com:5043/hadoop-master:${BUILD_REV}
     ports:
       - 50070:50070
       - 50010:50010
@@ -37,7 +37,7 @@ services:
     command: ./run.sh
 
   hadoop-slave3:
-    image: registry.activitystream.com:5043/hadoop-spark-cluster
+    image: registry.activitystream.com:5043/hadoop-node:${BUILD_REV}
     networks:
       - hadoop
     hostname: hadoop-slave3
@@ -46,7 +46,7 @@ services:
         constraints: [node.labels.hadoop.role == master]
 
   hadoop-slave1:
-    image: registry.activitystream.com:5043/hadoop-spark-cluster
+    image: registry.activitystream.com:5043/hadoop-node:${BUILD_REV}
     networks:
       - hadoop
     hostname: hadoop-slave1
@@ -55,7 +55,7 @@ services:
         constraints: [node.labels.hadoop.role == node1]
 
   hadoop-slave2:
-    image: registry.activitystream.com:5043/hadoop-spark-cluster
+    image: registry.activitystream.com:5043/hadoop-node:${BUILD_REV}
     networks:
       - hadoop
     hostname: hadoop-slave2

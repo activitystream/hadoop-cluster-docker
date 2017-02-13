@@ -31,9 +31,7 @@ ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin:/usr/local/spark/bin
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
     cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
-RUN mkdir -p ~/hdfs/namenode && \
-    mkdir -p ~/hdfs/datanode && \
-    mkdir $HADOOP_HOME/logs
+RUN mkdir $HADOOP_HOME/logs
 
 COPY config/* /tmp/
 
@@ -45,21 +43,12 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/yarn-site.xml $HADOOP_HOME/etc/hadoop/yarn-site.xml && \
     cp /tmp/slaves $HADOOP_HOME/etc/hadoop/slaves && \
     cp /tmp/slaves $SPARK_HOME/conf/slaves && \
-    mv /tmp/spark-env.sh $SPARK_HOME/conf/spark-env.sh && \
-    mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
-    mv /tmp/run.sh ~/run.sh && \
-    mv /tmp/run-wordcount.sh ~/run-wordcount.sh
+    mv /tmp/spark-env.sh $SPARK_HOME/conf/spark-env.sh
 
-RUN chmod +x ~/start-hadoop.sh && \
-    chmod +x ~/run.sh && \
-    chmod +x ~/run-wordcount.sh && \
-    chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
-    chmod +x $HADOOP_HOME/sbin/start-yarn.sh
+RUN chmod +x $HADOOP_HOME/sbin/*.sh && \
+    chmod +x $SPARK_HOME/sbin/*.sh
 
-# format namenode
-RUN /usr/local/hadoop/bin/hdfs namenode -format
 
 EXPOSE 22 50070 50010 50020 50075 50090 8020 8088 8085 9000 8080
-
 
 CMD [ "sh", "-c", "service ssh start; bash -c 'while true; do tail -f /usr/local/*/logs/*.out; sleep 10; done'"]
